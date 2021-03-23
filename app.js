@@ -1,95 +1,46 @@
+// What is this?
+// Why do we need to bind things?
+// Why is this a thing? Why do we need this in JavaScript?
+
+// 1. this is always the object that is executing the function. 
+// 2. this always refers to the context where the function is being called, 
+// not the context where the function is defined.
+// 3. use the bind, call and apply keywords to bind your objects to functions. 
+
+console.log(this)
+
 const sandwich = {
-  filling: 'humous',
-  salad: ['tomatoes', 'lettuce', 'cucumber' ],
-  assemble() {
-    this.salad.map(function(saladItem) {
-      console.log(this.filling, saladItem)
-    })
-  },
-  eat() {
-    console.log('yum, ', this.filling)
-  }
+    filling: 'hummus',
+    salad: ['tomatoes', 'lettuce', 'cucumber' ],
+    assemble() {
+      this.salad.map(function(saladItem) {
+        console.log(this.filling, saladItem)
+      }, this)
+    },
+    eat() {
+      console.log('yum, ', this.filling)
+    }
 }
-
-sandwich.eat() 
-
-// new keyword
-
-function Sandwich(filling) {
-  this.filling = filling;
-  console.log(this)
-}
-
-const hotDog = new Sandwich('sausage')
-
-// BUT....
-
+sandwich.eat()
 sandwich.assemble()
 
-// BINDING!
+// let eatFunction = sandwich.eat
+// eatFunction = eatFunction.bind(sandwich)
 
-
-
-let eatFunction = sandwich.eat
-
-eatFunction();
-
-let boundFunction = eatFunction.bind(sandwich); // this is explicit binding
-
-boundFunction();
-
-// call 
-
-let eat = function(){
-  console.log(this.filling)
+let eatFunction = function(item1, item2, item3) {
+    console.log('yum, ', this.filling, item1, item2, item3)
 }
+eatFunction()
+// eatFunction = eatFunction.bind(sandwich)
 
-let ploughmans = {
-  filling: 'cheese'
+// eatFunction.call(sandwich)
+
+const salad = ['tomatoes', 'lettuce', 'cucumber']
+
+eatFunction.apply(sandwich, salad)
+
+function Sandwich(filling) {
+    this.filling = filling
+    console.log(this)
 }
-
-eat.call(ploughmans)
-
-
-// apply
-
-
-let eaty = function(item1, item2, item3){
-  console.log(this.filling)
-  console.log(`Also includes some salad: , ${item1}, ${item2}, ${item3}`)
-}
-
-let ploughmansy = {
-  filling: 'cheese',
-}
-let salad = ['tomatoes', 'lettuce', 'cucumber' ];
-
-eaty.call(ploughmansy, salad[0], salad[1], salad[2] )
-
-
-
-
-let eatyy = function(item1, item2, item3){
-  console.log(this.filling)
-  console.log(`Also includes some salad: , ${item1}, ${item2}, ${item3}`)
-}
-
-let ploughmansyy = {
-  filling: 'cheese',
-}
-// let salad = ['tomatoes', 'lettuce', 'cucumber' ];
-
-eatyy.apply(ploughmansyy, salad )
-
-
-// another example
-
-
-
-ploughmans.make = eat.bind(ploughmans)
-
-// ploughmans.make()
-// eat();
-
-
-
+const hotDog = new Sandwich('sausage')
