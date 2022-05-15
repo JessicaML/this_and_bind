@@ -2,12 +2,11 @@
 
 ## how to install
 
-git clone https://github.com/JessicaML/this_and_bind.git
+`$ git clone https://github.com/JessicaML/this_and_bind.git`
 
-cd this_and_bind
+`$ cd this_and_bind`
 
-npm install || yarn install
+`$ npm install` 
 
-npm start || yarn start
-
+`$ npm start` 
 
